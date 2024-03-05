@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Logo from '../../olx-logo.png';
+import { Logo } from '../../assets';
 import './Signup.css';
 
-export default function Signup() {
+const Signup = () => {
   return (
     <div>
       <div className="signupParentDiv">
@@ -57,3 +57,5 @@ export default function Signup() {
     </div>
   );
 }
+
+export default Signup;

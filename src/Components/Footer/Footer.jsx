@@ -1,8 +1,7 @@
 import React from 'react';
-
 import './Footer.css';
 
-function Footer() {
+const Footer = () => {
   return (
     <div className="footerParentDiv">
       <div className="content">
@@ -12,7 +11,7 @@ function Footer() {
           </div>
           <div className="list">
             <ul>
-              <li>kolkata</li>
+              <li>Kolkata</li>
               <li>Mumbai</li>
               <li>Chennai</li>
               <li>Pune</li>

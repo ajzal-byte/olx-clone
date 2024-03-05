@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Logo from '../../olx-logo.png';
+import { Logo } from '../../assets';
 import './Login.css';
 
-function Login() {
+const Login = () => {
   return (
     <div>
       <div className="loginParentDiv">

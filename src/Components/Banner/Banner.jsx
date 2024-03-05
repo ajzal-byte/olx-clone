@@ -1,8 +1,8 @@
 import React from 'react';
-
 import './Banner.css';
-import Arrow from '../../assets/Arrow'
-function Banner() {
+import {Arrow} from '../../assets'
+
+const Banner = () => {
   return (
     <div className="bannerParentDiv">
       <div className="bannerChildDiv">

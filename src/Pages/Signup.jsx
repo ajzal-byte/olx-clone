@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Signup from '../Components/Signup/Signup';
+import {Signup} from '../Components';
 
-function SignupPage() {
+const SignupPage = () => {
   return (
     <div>
       <Signup />

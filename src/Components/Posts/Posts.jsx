@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
+import { Heart } from "../../assets";
+import "./Post.css";
 
-import Heart from '../../assets/Heart';
-import './Post.css';
-
-function Posts() {
-
+const Posts = () => {
   return (
     <div className="postParentDiv">
       <div className="moreView">
@@ -13,9 +11,7 @@ function Posts() {
           <span>View more</span>
         </div>
         <div className="cards">
-          <div
-            className="card"
-          >
+          <div className="card">
             <div className="favorite">
               <Heart></Heart>
             </div>
@@ -58,6 +54,6 @@ function Posts() {
       </div>
     </div>
   );
-}
+};
 
 export default Posts;

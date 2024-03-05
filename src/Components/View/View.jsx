@@ -1,7 +1,7 @@
 import React from 'react';
-
 import './View.css';
-function View() {
+
+const View = () => {
   return (
     <div className="viewParentDiv">
       <div className="imageShowDiv">
