@@ -6,5 +6,6 @@ import Login from "./Login/Login";
 import Posts from "./Posts/Posts";
 import Signup from "./Signup/Signup";
 import View from "./View/View";
+import Spinner from "./Spinner/Spinner";
 
-export {Banner, Create, Footer, Header, Login, Posts, Signup, View};
+export {Banner, Create, Footer, Header, Login, Posts, Signup, View, Spinner};
