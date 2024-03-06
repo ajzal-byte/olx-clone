@@ -15,6 +15,10 @@ const Signup = () => {
   const { firebase } = useContext(FirebaseContext);
   const navigate = useNavigate();
 
+  const gotToLogin = () => {
+    navigate('/login')
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -121,7 +125,7 @@ const Signup = () => {
             <br />
             <button>Signup</button>
           </form>
-          <a>Login</a>
+          <a onClick={gotToLogin}>Login</a>
         </div>
       )}
     </div>
