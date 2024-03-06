@@ -2,8 +2,13 @@ import React, { Fragment, useContext, useState } from "react";
 import "./Create.css";
 import { FirebaseContext, AuthContext } from "../../store/Context";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
+import Header from "../Header/Header";
 
 const Create = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
@@ -32,78 +37,98 @@ const Create = () => {
       return toast.error("Please upload an image to continue.");
     }
 
+    // setLoading(true);
+
     firebase
       .storage()
       .ref(`/image/${image?.name}`)
       .put(image)
       .then(({ ref }) => {
         ref.getDownloadURL().then((url) => {
-          firebase.firestore().collection("products").add({
-            name,
-            category,
-            price,
-            imgURL: url,
-            userId: user.uid,
-            createdAt: new Date().toDateString(),
-          });
+          firebase
+            .firestore()
+            .collection("products")
+            .add({
+              name,
+              category,
+              price,
+              imgURL: url,
+              userId: user.uid,
+              createdAt: new Date().toDateString(),
+            })
+            .then(() => {
+              setLoading(false);
+              navigate("/");
+            })
+            .catch(() => {
+              setLoading(false);
+              toast.error("An error occurred. Please try again later.");
+            });
         });
       })
-      .catch(() => toast.error("Please upload an image to continue."));
+      .catch(() => {
+        setLoading(false);
+        toast.error("Please upload an image to continue.");
+      });
   };
 
   return (
     <Fragment>
       <card>
-        <div className="centerDiv">
-          <label htmlFor="fname">Name</label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            id="fname"
-            name="Name"
-          />
-          <br />
-          <label htmlFor="fname">Category</label>
-          <br />
-          <input
-            className="input"
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            id="fname"
-            name="category"
-          />
-          <br />
-          <label htmlFor="fname">Price</label>
-          <br />
-          <input
-            className="input"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            id="fname"
-            name="Price"
-          />
-          <br />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="centerDiv">
+            <label htmlFor="fname">Name</label>
+            <br />
+            <input
+              className="input"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              id="fname"
+              name="Name"
+            />
+            <br />
+            <label htmlFor="fname">Category</label>
+            <br />
+            <input
+              className="input"
+              type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              id="fname"
+              name="category"
+            />
+            <br />
+            <label htmlFor="fname">Price</label>
+            <br />
+            <input
+              className="input"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              id="fname"
+              name="Price"
+            />
+            <br />
 
-          <br />
-          <img
-            alt="Posts"
-            width="200px"
-            height="200px"
-            src={image && URL.createObjectURL(image)}
-          ></img>
+            <br />
+            <img
+              alt="Posts"
+              width="200px"
+              height="200px"
+              src={image && URL.createObjectURL(image)}
+            ></img>
 
-          <br />
-          <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-          <br />
-          <button onClick={handleSubmit} className="uploadBtn">
-            Upload and Submit
-          </button>
-        </div>
+            <br />
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <br />
+            <button onClick={handleSubmit} className="uploadBtn">
+              Upload and Submit
+            </button>
+          </div>
+        )}
       </card>
     </Fragment>
   );
