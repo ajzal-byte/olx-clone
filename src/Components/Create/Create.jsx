@@ -12,6 +12,26 @@ const Create = () => {
   const [image, setImage] = useState(null);
 
   const handleSubmit = () => {
+    if (!name || name !== name.trim()) {
+      return toast.error(
+        "Product name cannot be empty or contain only whitespaces."
+      );
+    }
+
+    if (!category || category !== category.trim()) {
+      return toast.error(
+        "Category cannot be empty or contain only whitespaces."
+      );
+    }
+
+    if (price <= 0) {
+      return toast.error("Price should be greater than 0.");
+    }
+
+    if (!image) {
+      return toast.error("Please upload an image to continue.");
+    }
+
     firebase
       .storage()
       .ref(`/image/${image?.name}`)
