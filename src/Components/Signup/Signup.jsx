@@ -1,22 +1,47 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from "react";
 
-import { Logo } from '../../assets';
-import './Signup.css';
+import { Logo } from "../../assets";
+import "./Signup.css";
+import { FirebaseContext } from "../../store/FirebaseContext";
+import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const { firebase } = useContext(FirebaseContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-  }
+    console.log(firebase);
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(result => {
+        result.user.updateProfile({ displayName: username }).then(() => {
+          firebase
+            .firestore()
+            .collection("users")
+            .add({
+              id: result.user.uid,
+              email: email,
+              phone: phone,
+            })
+            .then(() => navigate("/login"));
+        });
+      })
+      .catch((error) => toast.error(error.message));
+
+    
+  };
   return (
     <div>
       <div className="signupParentDiv">
-        <img alt='ols-logo' width="200px" height="200px" src={Logo}></img>
+        <img alt="ols-logo" width="200px" height="200px" src={Logo}></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
@@ -73,6 +98,6 @@ const Signup = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Signup;
