@@ -17,6 +17,25 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (username !== username.trim()) {
+      return toast.error(
+        "Username cannot be empty or contain only whitespaces."
+      );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return toast.error("Invalid email format.");
+    }
+    const phoneRegex = /^\d+$/;
+    if (!phoneRegex.test(phone)) {
+      return toast.error("Phone should contain only numbers.");
+    }
+    if (password.length < 6) {
+      return toast.error("Password should be at least 6 characters long.");
+    }
+
     setLoading(true);
 
     firebase
@@ -46,7 +65,7 @@ const Signup = () => {
   return (
     <div>
       {loading ? (
-        <Spinner/>
+        <Spinner />
       ) : (
         <div className="signupParentDiv">
           <img alt="ols-logo" width="200px" height="200px" src={Logo}></img>
