@@ -16,8 +16,8 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const gotToLogin = () => {
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,10 +32,13 @@ const Signup = () => {
     if (!emailRegex.test(email)) {
       return toast.error("Invalid email format.");
     }
-    const phoneRegex = /^\d+$/;
+    const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(phone)) {
-      return toast.error("Phone should contain only numbers.");
+      return toast.error(
+        "Phone should contain exactly 10 digits and only numbers."
+      );
     }
+
     if (password.length < 6) {
       return toast.error("Password should be at least 6 characters long.");
     }
