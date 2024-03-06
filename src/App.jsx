@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import { LoginPage, SignupPage } from "./Pages";
 import { Toaster } from "react-hot-toast";
+import { AuthContext, FirebaseContext } from "./store/Context";
 
 const App = () => {
+  const {setUser} = useContext(AuthContext);
+  const {firebase} = useContext(FirebaseContext)
+  useEffect(() => { 
+    firebase.auth().onAuthStateChanged((user) => setUser(user))
+  }, [])
   return (
     <div>
       <div><Toaster/></div>

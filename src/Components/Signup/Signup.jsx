@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Signup.css";
 import { Logo } from "../../assets";
 import { Spinner } from "../";
-import { FirebaseContext } from "../../store/FirebaseContext";
+import { FirebaseContext } from "../../store/Context";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
