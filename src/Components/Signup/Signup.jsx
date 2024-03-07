@@ -55,8 +55,9 @@ const Signup = () => {
             .collection("users")
             .add({
               id: result.user.uid,
-              email: email,
-              phone: phone,
+              username,
+              email,
+              phone,
             })
             .then(() => {
               setLoading(false);
