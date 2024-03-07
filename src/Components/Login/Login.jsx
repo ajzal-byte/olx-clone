@@ -1,17 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Login.css";
 import { Logo } from "../../assets";
-import { FirebaseContext } from "../../store/Context";
+import { AuthContext, FirebaseContext } from "../../store/Context";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { firebase } = useContext(FirebaseContext);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigate('/');
+      }
+    });
+    return () => unsubscribe();
+  }, [firebase, navigate]);
 
   const goToSignup = () => {
     navigate('/signup')
