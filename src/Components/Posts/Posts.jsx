@@ -33,33 +33,41 @@ const Posts = () => {
           <span>View more</span>
         </div>
         <div className="cards">
-          {products?.map((product) => {
-            return (
-              <div
-                onClick={() => {
-                  setPostDetails(product);
-                  navigate("/view");
-                }}
-                className="card"
-                key={product.id}
-              >
-                <div className="favorite">
-                  <Heart></Heart>
+          {products.length === 0 ? (
+            <h3>No products available</h3>
+          ) : (
+            products.map((product) => {
+              return (
+                <div
+                  onClick={() => {
+                    setPostDetails(product);
+                    localStorage.setItem(
+                      "postDetails",
+                      JSON.stringify(product)
+                    );
+                    navigate("/view");
+                  }}
+                  className="card"
+                  key={product.id}
+                >
+                  <div className="favorite">
+                    <Heart></Heart>
+                  </div>
+                  <div className="image">
+                    <img src={product.imgURL} alt="" />
+                  </div>
+                  <div className="content">
+                    <p className="rate">&#x20B9; {product.price}</p>
+                    <span className="kilometer">{product.name}</span>
+                    <p className="name">{product.category}</p>
+                  </div>
+                  <div className="date">
+                    <span>{product.createdAt}</span>
+                  </div>
                 </div>
-                <div className="image">
-                  <img src={product.imgURL} alt="" />
-                </div>
-                <div className="content">
-                  <p className="rate">&#x20B9; {product.price}</p>
-                  <span className="kilometer">{product.name}</span>
-                  <p className="name">{product.category}</p>
-                </div>
-                <div className="date">
-                  <span>{product.createdAt}</span>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
       <div className="recommendations">
@@ -67,33 +75,41 @@ const Posts = () => {
           <span>Fresh recommendations</span>
         </div>
         <div className="cards">
-          {products?.map((product) => {
-            return (
-              <div
-                onClick={() => {
-                  setPostDetails(product);
-                  navigate("/view");
-                }}
-                className="card"
-                key={product.id}
-              >
-                <div className="favorite">
-                  <Heart></Heart>
+          {products.length === 0 ? (
+            <h3>No products available</h3>
+          ) : (
+            products.map((product) => {
+              return (
+                <div
+                  onClick={() => {
+                    setPostDetails(product);
+                    localStorage.setItem(
+                      "postDetails",
+                      JSON.stringify(product)
+                    );
+                    navigate("/view");
+                  }}
+                  className="card"
+                  key={product.id}
+                >
+                  <div className="favorite">
+                    <Heart></Heart>
+                  </div>
+                  <div className="image">
+                    <img src={product.imgURL} alt="" />
+                  </div>
+                  <div className="content">
+                    <p className="rate">&#x20B9; {product.price}</p>
+                    <span className="kilometer">{product.name}</span>
+                    <p className="name">{product.category}</p>
+                  </div>
+                  <div className="date">
+                    <span>{product.createdAt}</span>
+                  </div>
                 </div>
-                <div className="image">
-                  <img src={product.imgURL} alt="" />
-                </div>
-                <div className="content">
-                  <p className="rate">&#x20B9; {product.price}</p>
-                  <span className="kilometer">{product.name}</span>
-                  <p className="name">{product.category}</p>
-                </div>
-                <div className="date">
-                  <span>{product.createdAt}</span>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>
